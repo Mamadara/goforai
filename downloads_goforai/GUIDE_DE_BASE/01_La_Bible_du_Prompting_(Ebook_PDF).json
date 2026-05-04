@@ -1,0 +1,20 @@
+{
+  "id": "c7a135ff-20ff-4a8f-a141-dcc407b6969b",
+  "course_id": "ceb90efb-3a1a-47f9-b179-9455ff0bb857",
+  "title": "La Bible du Prompting (Ebook PDF)",
+  "description": "Maîtrise comment rédiger des prompts que l'IA comprend. Télécharge le guide complet au format PDF.",
+  "video_provider": null,
+  "video_id": null,
+  "video_url": null,
+  "duration_seconds": 0,
+  "sort_order": 0,
+  "resources": [],
+  "is_published": true,
+  "created_at": "2026-04-29T14:05:54.640332+00:00",
+  "updated_at": "2026-04-29T14:05:54.640332+00:00",
+  "video_path": null,
+  "lesson_type": "pdf",
+  "asset_path": "ceb90efb-3a1a-47f9-b179-9455ff0bb857/la-bible-du-prompting.pdf",
+  "asset_name": "LA_BIBLE_DU_PROMPTING.pdf",
+  "asset_mime": "application/pdf"
+}

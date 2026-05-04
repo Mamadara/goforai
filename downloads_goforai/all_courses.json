@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ceb90efb-3a1a-47f9-b179-9455ff0bb857",
+    "title": "GUIDE DE BASE",
+    "description": "Maîtriser comment rédiger des prompts que l'IA comprend",
+    "cover_url": "https://drive.google.com/file/d/1K0uCaeV6kosGXMCThMk63v2CmEYUVlGD/view?usp=drive_link",
+    "sort_order": 0,
+    "is_published": true,
+    "created_at": "2026-04-28T04:36:58.564629+00:00",
+    "updated_at": "2026-04-28T04:47:06.597152+00:00"
+  },
+  {
+    "id": "1a1c5624-4683-43e9-ab27-82794e7d44f5",
+    "title": "MODULE 1 : Création de portraits",
+    "description": "La méthode pour créer des portraits indissociables d'une vraie séance photo professionnelle.",
+    "cover_url": null,
+    "sort_order": 1,
+    "is_published": true,
+    "created_at": "2026-04-28T04:36:58.564629+00:00",
+    "updated_at": "2026-04-29T14:21:44.205749+00:00"
+  },
+  {
+    "id": "3299e494-47d3-4320-8e5c-325a4331a9cb",
+    "title": "MODULE 2 : Retouche sur PC",
+    "description": "Le processus pour retoucher des images sur Photoshop comme un pro sur PC",
+    "cover_url": null,
+    "sort_order": 2,
+    "is_published": true,
+    "created_at": "2026-04-28T04:36:58.564629+00:00",
+    "updated_at": "2026-04-29T14:20:55.491161+00:00"
+  },
+  {
+    "id": "10822f50-1a68-4a15-a13d-8172b0042b64",
+    "title": "MODULE 3 : Retouche sur téléphone",
+    "description": "Le processus pour retoucher des images sur Photopea comme un pro sur mobile",
+    "cover_url": null,
+    "sort_order": 3,
+    "is_published": true,
+    "created_at": "2026-04-28T04:36:58.564629+00:00",
+    "updated_at": "2026-04-29T14:21:10.699266+00:00"
+  },
+  {
+    "id": "e3b8591a-22ec-4002-8939-e343e2d20e54",
+    "title": "MODULE 4 : Cas pratique",
+    "description": "Créer un studio virtuel et le monétiser sur Facebook",
+    "cover_url": null,
+    "sort_order": 4,
+    "is_published": true,
+    "created_at": "2026-04-28T04:36:58.564629+00:00",
+    "updated_at": "2026-04-28T04:36:58.564629+00:00"
+  },
+  {
+    "id": "6a73b06c-f39b-4059-992a-92ae89549789",
+    "title": "MODULE 5 : Cas pratique",
+    "description": "Générer des images 4K en haute résolution et réaliser une retouche avancée",
+    "cover_url": null,
+    "sort_order": 5,
+    "is_published": true,
+    "created_at": "2026-04-28T04:36:58.564629+00:00",
+    "updated_at": "2026-04-28T04:36:58.564629+00:00"
+  },
+  {
+    "id": "930079ec-339e-4328-821a-33355f362cbf",
+    "title": "MODULE 6 : Séance Photo Virtuelle",
+    "description": "Créer des séries de photos cohérentes sur Google Flow, sans retouche",
+    "cover_url": null,
+    "sort_order": 6,
+    "is_published": true,
+    "created_at": "2026-04-28T04:36:58.564629+00:00",
+    "updated_at": "2026-04-29T14:20:18.196466+00:00"
+  },
+  {
+    "id": "70b46420-1536-4daf-9002-06ee754ae907",
+    "title": "MODULE 7 : Shooting Produit IA",
+    "description": "Générer des visuels produits e-commerces qui font vendre sur Whisk ai.",
+    "cover_url": null,
+    "sort_order": 7,
+    "is_published": true,
+    "created_at": "2026-04-28T04:36:58.564629+00:00",
+    "updated_at": "2026-04-29T14:19:50.881172+00:00"
+  },
+  {
+    "id": "6206f74f-aaec-4825-b278-e92fdd3a76c0",
+    "title": "MODULE 8 : Création de contenu",
+    "description": "Générer des idées de contenus et rédiger votre premier post avec Chat GPT",
+    "cover_url": null,
+    "sort_order": 8,
+    "is_published": true,
+    "created_at": "2026-04-28T04:36:58.564629+00:00",
+    "updated_at": "2026-04-29T14:19:29.424096+00:00"
+  }
+]

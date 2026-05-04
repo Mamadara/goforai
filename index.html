@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cours GoForAI</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f4f4f4;
+    color: #222;
+    line-height: 1.5;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+  }
+  .module {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .module h2 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+  }
+  .module .desc {
+    margin: 0 0 16px 0;
+    color: #555;
+  }
+  .lesson {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #eee;
+  }
+  .lesson:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+  .lesson h3 {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  iframe {
+    width: 100%;
+    height: 420px;
+    border: none;
+    border-radius: 4px;
+    background: #000;
+  }
+  .pdf-link {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #c0392b;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .pdf-link:hover {
+    background: #a93226;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Formations GoForAI</h1>
+  <div id="app"></div>
+</div>
+
+<script>
+const courses = [
+  {
+    "id": "ceb90efb-3a1a-47f9-b179-9455ff0bb857",
+    "title": "GUIDE DE BASE",
+    "description": "Maîtriser comment rédiger des prompts que l'IA comprend",
+    "sort_order": 0
+  },
+  {
+    "id": "1a1c5624-4683-43e9-ab27-82794e7d44f5",
+    "title": "MODULE 1 : Création de portraits",
+    "description": "La méthode pour créer des portraits indissociables d'une vraie séance photo professionnelle.",
+    "sort_order": 1
+  },
+  {
+    "id": "3299e494-47d3-4320-8e5c-325a4331a9cb",
+    "title": "MODULE 2 : Retouche sur PC",
+    "description": "Le processus pour retoucher des images sur Photoshop comme un pro sur PC",
+    "sort_order": 2
+  },
+  {
+    "id": "10822f50-1a68-4a15-a13d-8172b0042b64",
+    "title": "MODULE 3 : Retouche sur téléphone",
+    "description": "Le processus pour retoucher des images sur Photopea comme un pro sur mobile",
+    "sort_order": 3
+  },
+  {
+    "id": "e3b8591a-22ec-4002-8939-e343e2d20e54",
+    "title": "MODULE 4 : Cas pratique",
+    "description": "Créer un studio virtuel et le monétiser sur Facebook",
+    "sort_order": 4
+  },
+  {
+    "id": "6a73b06c-f39b-4059-992a-92ae89549789",
+    "title": "MODULE 5 : Cas pratique",
+    "description": "Générer des images 4K en haute résolution et réaliser une retouche avancée",
+    "sort_order": 5
+  },
+  {
+    "id": "930079ec-339e-4328-821a-33355f362cbf",
+    "title": "MODULE 6 : Séance Photo Virtuelle",
+    "description": "Créer des séries de photos cohérentes sur Google Flow, sans retouche",
+    "sort_order": 6
+  },
+  {
+    "id": "70b46420-1536-4daf-9002-06ee754ae907",
+    "title": "MODULE 7 : Shooting Produit IA",
+    "description": "Générer des visuels produits e-commerces qui font vendre sur Whisk ai.",
+    "sort_order": 7
+  },
+  {
+    "id": "6206f74f-aaec-4825-b278-e92fdd3a76c0",
+    "title": "MODULE 8 : Création de contenu",
+    "description": "Générer des idées de contenus et rédiger votre premier post avec Chat GPT",
+    "sort_order": 8
+  }
+];
+
+const lessons = [
+  {
+    "course_id": "ceb90efb-3a1a-47f9-b179-9455ff0bb857",
+    "title": "La Bible du Prompting (Ebook PDF)",
+    "description": "Maîtrise comment rédiger des prompts que l'IA comprend. Télécharge le guide complet au format PDF.",
+    "lesson_type": "pdf",
+    "video_id": null,
+    "sort_order": 0,
+    "local_pdf": "downloads_goforai/GUIDE_DE_BASE/01_LA_BIBLE_DU_PROMPTING.pdf"
+  },
+  {
+    "course_id": "1a1c5624-4683-43e9-ab27-82794e7d44f5",
+    "title": "Module 1 — Créer des portraits indissociables d'une vraie séance photo professionnelle",
+    "lesson_type": "video",
+    "video_id": "8d7qu0rOgjk",
+    "sort_order": 0
+  },
+  {
+    "course_id": "3299e494-47d3-4320-8e5c-325a4331a9cb",
+    "title": "Module 2 — Retoucher des images sur Photoshop comme un pro sur PC",
+    "lesson_type": "video",
+    "video_id": "7-gQwJZDDeM",
+    "sort_order": 0
+  },
+  {
+    "course_id": "10822f50-1a68-4a15-a13d-8172b0042b64",
+    "title": "Module 3 — Retoucher des images sur Photopea comme un pro sur mobile",
+    "lesson_type": "video",
+    "video_id": "-bOVTbofiBI",
+    "sort_order": 0
+  },
+  {
+    "course_id": "e3b8591a-22ec-4002-8939-e343e2d20e54",
+    "title": "Module 4 — Créer un studio virtuel et le monétiser sur Facebook",
+    "lesson_type": "video",
+    "video_id": "4METyVyFNyM",
+    "sort_order": 0
+  },
+  {
+    "course_id": "6a73b06c-f39b-4059-992a-92ae89549789",
+    "title": "Module 5 — Générer des images 4K en haute résolution et réaliser une retouche avancée",
+    "lesson_type": "video",
+    "video_id": "JEpQLu4szYI",
+    "sort_order": 0
+  },
+  {
+    "course_id": "930079ec-339e-4328-821a-33355f362cbf",
+    "title": "Module 6 — Créer des séries de photos cohérentes sur Google Flow, sans retouche",
+    "lesson_type": "video",
+    "video_id": "MVXnHnZXl04",
+    "sort_order": 0
+  },
+  {
+    "course_id": "930079ec-339e-4328-821a-33355f362cbf",
+    "title": "Guide express — Créer des séries de photos en variante",
+    "lesson_type": "pdf",
+    "video_id": null,
+    "sort_order": 1,
+    "local_pdf": "downloads_goforai/MODULE_6___Séance_Photo_Virtuelle/02_guide-series-photos-variantes.pdf"
+  },
+  {
+    "course_id": "70b46420-1536-4daf-9002-06ee754ae907",
+    "title": "Module 7 — Générer des visuels produits e-commerce qui font vendre sur Whisk AI",
+    "lesson_type": "video",
+    "video_id": "FAxJs5TMZ-0",
+    "sort_order": 0
+  },
+  {
+    "course_id": "6206f74f-aaec-4825-b278-e92fdd3a76c0",
+    "title": "Module 8 — Générer des idées de contenu et rédiger votre premier post avec ChatGPT",
+    "lesson_type": "video",
+    "video_id": "tJNvchHDfWQ",
+    "sort_order": 0
+  }
+];
+
+const app = document.getElementById('app');
+
+courses.sort((a, b) => a.sort_order - b.sort_order).forEach(course => {
+  const courseLessons = lessons
+    .filter(l => l.course_id === course.id)
+    .sort((a, b) => a.sort_order - b.sort_order);
+
+  const moduleDiv = document.createElement('div');
+  moduleDiv.className = 'module';
+
+  const title = document.createElement('h2');
+  title.textContent = course.title;
+  moduleDiv.appendChild(title);
+
+  const desc = document.createElement('p');
+  desc.className = 'desc';
+  desc.textContent = course.description;
+  moduleDiv.appendChild(desc);
+
+  courseLessons.forEach(lesson => {
+    const lessonDiv = document.createElement('div');
+    lessonDiv.className = 'lesson';
+
+    const lessonTitle = document.createElement('h3');
+    lessonTitle.textContent = lesson.title;
+    lessonDiv.appendChild(lessonTitle);
+
+    if (lesson.lesson_type === 'video' && lesson.video_id) {
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/' + lesson.video_id;
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('loading', 'lazy');
+      iframe.title = lesson.title;
+      lessonDiv.appendChild(iframe);
+    } else if (lesson.lesson_type === 'pdf' && lesson.local_pdf) {
+      const link = document.createElement('a');
+      link.className = 'pdf-link';
+      link.href = encodeURI(lesson.local_pdf);
+      link.textContent = 'Ouvrir le PDF';
+      link.target = '_blank';
+      lessonDiv.appendChild(link);
+    }
+
+    moduleDiv.appendChild(lessonDiv);
+  });
+
+  app.appendChild(moduleDiv);
+});
+</script>
+</body>
+</html>

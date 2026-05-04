@@ -1,0 +1,20 @@
+{
+  "id": "9f26caf1-a4ae-44a7-88c9-f3f198ef103f",
+  "course_id": "930079ec-339e-4328-821a-33355f362cbf",
+  "title": "Guide express — Créer des séries de photos en variante",
+  "description": null,
+  "video_provider": null,
+  "video_id": null,
+  "video_url": null,
+  "duration_seconds": 0,
+  "sort_order": 1,
+  "resources": [],
+  "is_published": true,
+  "created_at": "2026-04-29T14:30:28.206161+00:00",
+  "updated_at": "2026-04-29T14:30:28.206161+00:00",
+  "video_path": null,
+  "lesson_type": "pdf",
+  "asset_path": "930079ec-339e-4328-821a-33355f362cbf/guide-series-photos-variantes.pdf",
+  "asset_name": "guide-series-photos-variantes.pdf",
+  "asset_mime": "application/pdf"
+}
