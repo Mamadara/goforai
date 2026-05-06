@@ -12,7 +12,7 @@ import hashlib
 import hmac
 import logging
 import urllib.request
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from functools import wraps
 from flask import Flask, render_template, jsonify, request, send_from_directory, session, g
 
@@ -511,7 +511,7 @@ def api_payment_create():
 
     base = PUBLIC_URL or SITE_BASE_URL
 
-    order_id = f'goforai_{user["id"]}_{datetime.utcnow().strftime("%Y%m%d%H%M%S")}'
+    order_id = f'goforai_{user["id"]}_{datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")}'
 
     callback_url = f'{base}/api/webhook/maxelpay'
     success_url = f'{base}/?payment=success'
@@ -549,8 +549,9 @@ def api_payment_create():
             'error': msg
         }), 500
 
-    session_id = result.get('sessionId') or result.get('session_id') or result.get('id', '')
-    checkout_url = result.get('checkoutUrl') or result.get('checkout_url') or result.get('url', '')
+    result_data = result.get('data', result)
+    session_id = result_data.get('sessionId') or result_data.get('session_id') or result_data.get('id', '')
+    checkout_url = result_data.get('paymentUrl') or result_data.get('checkoutUrl') or result_data.get('checkout_url') or result_data.get('url', '')
 
     log.info(f"[Payment] Session created: sessionId={session_id} checkoutUrl={checkout_url}")
 
@@ -613,7 +614,7 @@ def api_payment_status():
             if status_val in ('paid', 'completed', 'confirmed'):
                 db.execute(
                     "UPDATE payments SET status = 'confirmed', confirmed_at = ? WHERE id = ?",
-                    (datetime.utcnow().isoformat(), payment['id'])
+                    (datetime.now(timezone.utc).isoformat(), payment['id'])
                 )
                 db.execute(
                     "UPDATE users SET has_paid = 1, payment_status = 'confirmed' WHERE id = ?",
@@ -680,7 +681,7 @@ def api_webhook_maxelpay():
         if payment and payment['status'] != 'confirmed':
             db.execute(
                 "UPDATE payments SET status = 'confirmed', confirmed_at = ? WHERE id = ?",
-                (datetime.utcnow().isoformat(), payment['id'])
+                (datetime.now(timezone.utc).isoformat(), payment['id'])
             )
             db.execute(
                 "UPDATE users SET has_paid = 1, payment_status = 'confirmed' WHERE id = ?",
