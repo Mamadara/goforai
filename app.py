@@ -35,15 +35,18 @@ PAYMENT_PRICE_USD = float(os.environ.get('PAYMENT_PRICE_USD', '10.14'))
 MAXELPAY_API_KEY = os.environ.get('MAXELPAY_API_KEY', 'pk_live_qkVKErwKOoe9xWeewizm0jUrlEIqD2zK')
 MAXELPAY_SECRET_KEY = os.environ.get('MAXELPAY_SECRET_KEY', '')
 MAXELPAY_BASE = 'https://api.maxelpay.com/api/v1'
-SITE_BASE_URL = os.environ.get('SITE_BASE_URL', 'http://localhost:5000')
-PUBLIC_URL = os.environ.get('PUBLIC_URL', '')
+SITE_BASE_URL = os.environ.get('SITE_BASE_URL', 'https://goforaibusiness.netlify.app')
+PUBLIC_URL = os.environ.get('PUBLIC_URL', 'https://goforaibusiness.netlify.app')
 
 FREE_COURSE_IDS = {
     'ceb90efb-3a1a-47f9-b179-9455ff0bb857',  # Guide de Base (PDFs gratuits)
     '1a1c5624-4683-43e9-ab27-82794e7d44f5',  # Module 1 (gratuit)
 }
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'instance', 'goforai.db')
+if os.environ.get('NETLIFY') == 'true':
+    DB_PATH = os.path.join('/tmp', 'goforai.db')
+else:
+    DB_PATH = os.path.join(os.path.dirname(__file__), 'instance', 'goforai.db')
 
 # ── Données des cours et leçons ────────────────────────────────────────────
 
@@ -334,9 +337,6 @@ def maxelpay_request(endpoint, method='GET', data=None):
         return json.loads(body) if body.startswith('{') else None
     except Exception as e:
         log.error(f"[MaxelPay] Erreur API: {e}")
-        return None
-    except Exception as e:
-        print(f"[MaxelPay] Erreur API: {e}")
         return None
 
 # ── Routes ─────────────────────────────────────────────────────────────────
