@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoForAI — Formation Photo IA</title>
+  <meta name="description" content="Maîtrisez la création photo avec l'IA. 8 modules, 10+ heures de formation vidéo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#3498db"/>
+          <path d="M10 22V10h4.5c2.5 0 4.5 2 4.5 4.5S17 19 14.5 19H13v3h-3zm3-6h1.5c1 0 1.5-.5 1.5-1.5S15.5 13 14.5 13H13v3z" fill="white"/>
+        </svg>
+        <span>GoForAI</span>
+      </a>
+      <div class="nav-links">
+        <a href="#modules">Modules</a>
+        <a href="#stats">Statistiques</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+      {% if user %}
+      <span class="nav-user" id="navUser">{{ user_phone_masked }}</span>
+      <button class="btn btn-sm btn-outline" id="btnLogout">Déconnexion</button>
+      {% else %}
+      <button class="btn btn-primary btn-sm" id="btnLogin">Se connecter</button>
+      {% endif %}
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#modules">Modules</a>
+    <a href="#stats">Statistiques</a>
+    <a href="#contact">Contact</a>
+    {% if user %}
+    <button class="btn btn-outline btn-sm" id="btnLogoutMobile">Déconnexion</button>
+    {% else %}
+    <button class="btn btn-primary" id="btnLoginMobile">Se connecter</button>
+    {% endif %}
+  </div>
+
+  <header class="hero">
+    <div class="container">
+      <span class="hero-badge">Formation complète disponible</span>
+      <h1>Maîtrisez la <span class="gradient-text">création photo</span> avec l'IA</h1>
+      <p class="hero-subtitle">8 modules complets, 10+ heures de formation vidéo pour créer des portraits professionnels, retoucher vos images et monétiser votre talent.</p>
+      <div class="hero-actions">
+        <a href="#modules" class="btn btn-primary btn-lg">Commencer la formation</a>
+        {% if not has_paid %}
+        <button class="btn btn-gold btn-lg" id="btnUnlockAll">Tout débloquer — {{ payment_price_display }}</button>
+        {% endif %}
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><span class="stat-num">8</span><span>Modules</span></div>
+        <div class="stat-item"><span class="stat-num">10+</span><span>Heures vidéo</span></div>
+        <div class="stat-item"><span class="stat-num">2</span><span>Guides PDF</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="modules-section" id="modules">
+    <div class="container">
+      <div class="section-header">
+        <h2>Votre parcours de formation</h2>
+        <p>De débutant à expert, suivez les modules dans l'ordre pour une progression optimale.</p>
+        {% if not has_paid %}
+        <p class="section-note">🔓 Modules gratuits &nbsp;|&nbsp; 🔒 Modules à débloquer</p>
+        {% endif %}
+      </div>
+      <div class="modules-list">
+        {% for course in courses|sort(attribute='sort_order') %}
+        {% set course_lessons = lessons|selectattr('course_id', 'equalto', course.id)|sort(attribute='sort_order')|list %}
+        {% set is_free = course.id in free_course_ids %}
+        {% set accessible = is_free or has_paid %}
+        <div class="module-card{% if not accessible %} module-locked{% endif %}">
+          <div class="module-accent" style="background:{{ course.color }}"></div>
+          <div class="module-header">
+            <div class="module-icon" style="background:{{ course.color }}">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                {% if course.icon == 'book-open' %}<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-7z"/>
+                {% elif course.icon == 'camera' %}<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+                {% elif course.icon == 'monitor' %}<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+                {% elif course.icon == 'smartphone' %}<rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+                {% elif course.icon == 'briefcase' %}<rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                {% elif course.icon == 'image' %}<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                {% elif course.icon == 'aperture' %}<circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/>
+                {% elif course.icon == 'shopping-bag' %}<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+                {% elif course.icon == 'pen-tool' %}<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                {% else %}<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+                {% endif %}
+              </svg>
+            </div>
+            <div class="module-meta">
+              <span class="module-num">Module {{ loop.index0 }}</span>
+              <h3>{{ course.title }}{% if is_free %} <span class="badge-free">Gratuit</span>{% endif %}</h3>
+            </div>
+            <span class="module-toggle">&#9660;</span>
+          </div>
+          <p class="module-desc">{{ course.description }}</p>
+          <div class="module-content">
+            {% if not accessible %}
+            <div class="lock-overlay">
+              <div class="lock-icon">🔒</div>
+              <p>Module payant</p>
+              {% if user %}
+              <button class="btn btn-gold btn-sm unlock-trigger" id="btnUnlockCourse">Débloquer — {{ payment_price_display }}</button>
+              {% else %}
+              <p class="lock-hint">Connectez-vous pour débloquer</p>
+              <button class="btn btn-primary btn-sm unlock-trigger" id="btnLoginFromLock">Se connecter</button>
+              {% endif %}
+            </div>
+            {% endif %}
+            {% for lesson in course_lessons %}
+            <div class="lesson-item{% if not accessible and not is_free %} lesson-blur{% endif %}">
+              <div class="lesson-type">{{ '▶' if lesson.lesson_type == 'video' else '📄' }}</div>
+              <div class="lesson-info">
+                <strong>{{ lesson.title }}</strong>
+                {% if lesson.description %}<p>{{ lesson.description }}</p>{% endif %}
+              </div>
+              {% if lesson.duration %}
+              <span class="lesson-duration">{{ lesson.duration }}</span>
+              {% endif %}
+              <div class="lesson-actions">
+                {% if accessible %}
+                  {% if lesson.lesson_type == 'video' and lesson.video_id %}
+                  <button class="btn btn-play" data-video="{{ lesson.video_id }}" data-title="{{ lesson.title }}">Regarder</button>
+                  {% elif lesson.lesson_type == 'pdf' and lesson.local_pdf %}
+                  <a href="/{{ lesson.local_pdf }}" target="_blank" class="btn btn-pdf">Ouvrir</a>
+                  {% endif %}
+                {% else %}
+                  <button class="btn btn-play btn-disabled" disabled>🔒</button>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-section" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 4 3 9 3s9-1.34 9-3v-5"/></svg>
+          <span class="stat-value">8</span>
+          <span>Modules complets</span>
+        </div>
+        <div class="stat-card">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span class="stat-value">10+</span>
+          <span>Heures de vidéo</span>
+        </div>
+        <div class="stat-card">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span class="stat-value">2</span>
+          <span>Guides PDF</span>
+        </div>
+        <div class="stat-card">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2.36 12.86c5.26-.91 9.33-1.17 15.35-2.6"/></svg>
+          <span class="stat-value">∞</span>
+          <span>Possibilités</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-box">
+        <div class="contact-info">
+          <h2>Une question ?</h2>
+          <p>N'hésitez pas à nous contacter pour toute question sur la formation ou pour un accompagnement personnalisé.</p>
+          <div>
+            <span style="display:flex;align-items:center;gap:8px;color:#5a6c7d;margin-bottom:8px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              support@goforai.com
+            </span>
+            <span style="display:flex;align-items:center;gap:8px;color:#5a6c7d">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Réponse sous 24h
+            </span>
+          </div>
+        </div>
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name">Nom</label>
+            <input type="text" id="name" name="name" required placeholder="Votre nom">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="votre@email.com">
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" required placeholder="Votre message..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-dark btn-full">
+            <span class="btn-text">Envoyer</span>
+            <span class="btn-loader" style="display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:white;border-radius:50%;animation:spin .6s linear infinite"></span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <strong>GoForAI</strong>
+        <span>Formation GoForAI. Tous droits réservés.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Vidéo -->
+  <div class="modal" id="videoModal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Fermer">&times;</button>
+      <h3 id="modalTitle">Lecture vidéo</h3>
+      <div class="video-wrapper">
+        <iframe id="videoFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Auth -->
+  <div class="modal" id="authModal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box auth-box">
+      <button class="modal-close" aria-label="Fermer">&times;</button>
+      <div class="auth-container">
+        <div class="auth-step" id="authStepPhone">
+          <div class="auth-icon">📱</div>
+          <h3>Connexion</h3>
+          <p>Entrez votre numéro de téléphone pour accéder à la formation.</p>
+          <form id="phoneForm">
+            <div class="form-group">
+              <label for="authPhone">Numéro de téléphone</label>
+              <input type="tel" id="authPhone" name="phone" required placeholder="+33 6 12 34 56 78" autocomplete="tel">
+            </div>
+            <button type="submit" class="btn btn-primary btn-full" id="btnLoginSubmit">
+              <span class="btn-text">Continuer</span>
+              <span class="btn-loader"></span>
+            </button>
+          </form>
+          <p class="auth-note">Aucun mot de passe requis.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Paiement -->
+  <div class="modal" id="paymentModal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box payment-box">
+      <button class="modal-close" aria-label="Fermer">&times;</button>
+      <div class="payment-container">
+        <div class="payment-header">
+          <div class="payment-icon">💰</div>
+          <h3>Débloquer tous les modules</h3>
+          <p class="payment-price">{{ payment_price_display }} USD</p>
+        </div>
+        <div class="payment-loading" id="paymentLoading">
+          <div class="spinner"></div>
+          <p>Redirection vers le paiement...</p>
+        </div>
+        <div class="payment-details" id="paymentDetails" style="display:none;">
+          <p class="payment-info">Vous allez être redirigé vers la page de paiement sécurisée MaxelPay pour compléter votre achat en crypto-monnaie.</p>
+          <div class="payment-status-display" id="paymentStatusDisplay">
+            <span class="payment-status-pending">⏳ En attente de confirmation...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"><span class="toast-msg">Message envoyé !</span></div>
+
+  <script>
+    window.GOFORAI_CONFIG = {
+      freeCourseIds: {{ free_course_ids | list | tojson }},
+      hasPaid: {{ 'true' if has_paid else 'false' }},
+      isLoggedIn: {{ 'true' if user else 'false' }},
+      paymentPriceUsd: {{ payment_price_usd }}
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
