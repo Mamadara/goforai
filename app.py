@@ -35,8 +35,8 @@ PAYMENT_PRICE_USD = float(os.environ.get('PAYMENT_PRICE_USD', '10.14'))
 MAXELPAY_API_KEY = os.environ.get('MAXELPAY_API_KEY', 'pk_live_qkVKErwKOoe9xWeewizm0jUrlEIqD2zK')
 MAXELPAY_SECRET_KEY = os.environ.get('MAXELPAY_SECRET_KEY', '')
 MAXELPAY_BASE = 'https://api.maxelpay.com/api/v1'
-SITE_BASE_URL = os.environ.get('SITE_BASE_URL', 'https://goforaibusiness.netlify.app')
-PUBLIC_URL = os.environ.get('PUBLIC_URL', 'https://goforaibusiness.netlify.app')
+SITE_BASE_URL = os.environ.get('SITE_BASE_URL', 'https://goforai.onrender.com')
+PUBLIC_URL = os.environ.get('PUBLIC_URL', 'https://goforai.onrender.com')
 
 FREE_COURSE_IDS = {
     'ceb90efb-3a1a-47f9-b179-9455ff0bb857',  # Guide de Base (PDFs gratuits)
